@@ -1,10 +1,11 @@
 import React from 'react';
-
+import { useState } from 'react';
 import './form.scss';
 
 function Form(props) {
 
-  function handleSubmit(e) {
+  let [form, setForm] = useState({});
+  const handleSubmit = e => {
     e.preventDefault();
     const formData = {
       method: 'GET',
@@ -12,9 +13,8 @@ function Form(props) {
     };
     props.handleApiCall(formData);
   }
-
-
-  return(
+  
+  return (
     <>
       <form onSubmit={handleSubmit}>
         <label >
@@ -30,7 +30,7 @@ function Form(props) {
         </label>
       </form>
     </>
-    );
+  );
 }
 
 export default Form;
