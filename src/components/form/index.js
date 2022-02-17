@@ -1,19 +1,33 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './form.scss';
 
 function Form(props) {
 
   let [form, setForm] = useState({});
+
   const handleSubmit = e => {
     e.preventDefault();
+   
     const formData = {
       method: 'GET',
-      url: 'https://pokeapi.co/api/v2/pokemon',
+      url:  e.target.url.value,
+      // url: 'https://pokeapi.co/api/v2/pokemon',
     };
     props.handleApiCall(formData);
   }
   
+  useEffect(() => {
+    // window.addEventListener()
+
+    // returning a function causes this to run on un-mount
+    return () => {
+      console.log('form removed from DOM');
+    }
+  });
+
+
+
   return (
     <>
       <form onSubmit={handleSubmit}>
