@@ -4,18 +4,32 @@ import './form.scss';
 
 function Form(props) {
 
-  let [form, setForm] = useState({});
+  // let [form, setForm] = useState({});
 
   const handleSubmit = e => {
     e.preventDefault();
-    
-    const formData = {
-      method: 'GET',
-      url: 'https://pokeapi.co/api/v2/pokemon',
-    };
+
+    const formData = { ...props.requestParams };
+    //   method: 'GET',
+    //   url: 'https://pokeapi.co/api/v2/pokemon',
+
     props.handleApiCall(formData);
   }
-  
+
+  const handleUrlChange = (e) => {
+    let { name, value } = e.target;
+    props.setRequest((prevRequest) => ({ ...prevRequest, [name]: value }));
+  }
+
+  const handleMethodChange = (e) => {
+    let { value } = e.target;
+    props.setRequest((prevRequest) => ({...prevRequest, method: value}));
+  }
+
+  // const handleFormChange = () => {
+
+  // }
+
   useEffect(() => {
     // returning a function causes this to run on un-mount
     return () => {
@@ -30,14 +44,14 @@ function Form(props) {
       <form onSubmit={handleSubmit}>
         <label >
           <span>URL: </span>
-          <input name='url' type='text' />
+          <input name='url' type='text' onChange={handleUrlChange} />
           <button type="submit">GO!</button>
         </label>
         <label className="methods">
-          <span id="get">GET</span>
-          <span id="post">POST</span>
-          <span id="put">PUT</span>
-          <span id="delete">DELETE</span>
+          <span id="get" onClick={handleMethodChange}>GET</span>
+          <span id="post" onClick={handleMethodChange}>POST</span>
+          <span id="put" onClick={handleMethodChange}>PUT</span>
+          <span id="delete" onClick={handleMethodChange}>DELETE</span>
         </label>
       </form>
     </>
